@@ -30,7 +30,10 @@ my $session_id = $ARGV[0];
 
 # Get the code from the DB
 my $sth = $dbh->prepare("SELECT code FROM sessions WHERE session_id=?");
-$sth->execute($session_id);
+if (!$sth->execute($session_id)) {
+	print STDERR $sth->errstr;
+        exit -1;
+}
 my ($code) = $sth->fetchrow_array();
 $sth->finish;
 
@@ -50,7 +53,10 @@ my $token = $response->{'access_token'};
 
 # Store the access token into the DB
 my $sth = $dbh->prepare("UPDATE sessions SET token=? WHERE session_id=?");
-$sth->execute($token, $session_id);
+if (!$sth->execute($token, $session_id)) {
+        print STDERR $sth->errstr;
+        exit -1;
+}
 $sth->finish;
 
 print "Token stored\n";
@@ -62,7 +68,7 @@ my $response = $ua->post( $cilogon_mp_proxy, {
         'client_secret' => $client_secret} );
 
 # Store proxy in the tmp file
-open ( my $fh, ">", "/tmp/x509_$session_id");
+open ( my $fh, ">", "/tmp/x509_$session_id") or die "Cannot open file /tmp/x509_$session_id.";
 print $fh $response->content;
 close $fh;
 

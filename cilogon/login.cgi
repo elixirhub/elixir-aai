@@ -25,6 +25,7 @@ my $dbh = DBI->connect("dbi:SQLite:dbname=$db_file","","");
 # Check if the user is already authorized
 if ($q->param('code') && $q->param('state')) {
 	my $session_id = $q->cookie($session_id_cookie_name);
+	# Check if the state is valid
 	if (is_state_valid($q->param("state"), $session_id)) {
 		my $code = $q->param('code');
 		my $state = $q->param('state');
@@ -39,7 +40,7 @@ if ($q->param('code') && $q->param('state')) {
 		print $q->header('text/html');
 		print $q->h1("Code stored for session ID: $session_id");
 		exit;
-		# Now you can run script which will use the code to get the OAuth token
+		# Now you can run script ./get_proxy.pl [session ID] which will use the code to get the proxy certificate
 	} else {
 		error("state is not valid");	
 		exit;
@@ -54,9 +55,12 @@ if ($q->param('code') && $q->param('state')) {
 	my $response_type="code";
 	my $scope="openid edu.uiuc.ncsa.myproxy.getcert";
 
-	# Generate session id for the user and store it into the HttpOnly cookie
-	my $session_id_generator = new String::Random;
-	my $session_id = $session_id_generator->randpattern("sssssssssss");
+	my $session_id = $q->param('session_id');
+	if (!$session_id) {
+		# Generate session id for the user and store it into the HttpOnly cookie
+		my $session_id_generator = new String::Random;
+		$session_id = $session_id_generator->randpattern("sssssssssss");
+	}
 
 	# Client session with token binding, do the hash of the session_id
 	my $sha2obj = new Digest::SHA2;
@@ -88,7 +92,10 @@ sub is_state_valid {
 	my $state = shift;
 	my $session_id = shift;
 	my $sth = $dbh->prepare("SELECT 1 FROM sessions WHERE state=? and session_id=?");
-	$sth->execute($state, $session_id);
+	if (!$sth->execute($state, $session_id)) {
+		error($sth->errstr);
+                exit;
+	}
 	my $ret = 0;
 	if ($sth->fetch()) {
 		$ret = 1;
