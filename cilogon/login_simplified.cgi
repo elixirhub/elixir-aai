@@ -29,7 +29,7 @@ if ($q->param('code') && $q->param('state')) {
 		my $state = $q->param('state');
 
 		# Store the access code
-		open( my $fh, ">", "/tmp/cilogon_ac_" . $session_id) or error("Cannot open /tmp/cilogon_ac_" . $session_id . );
+		open( my $fh, ">", "/tmp/cilogon_ac_" . $session_id) or error("Cannot open /tmp/cilogon_ac_" . $session_id);
 		print $fh $code;
 		close($fh);
 
@@ -67,7 +67,7 @@ if ($q->param('code') && $q->param('state')) {
 	my $sha2obj = new Digest::SHA2;
 	$sha2obj->add($session_id . $client_id);
 	my $state = $sha2obj->hexdigest();
-	open( my $fh, ">", "/tmp/cilogon_state_" . $session_id) or error("Cannot open /tmp/cilogon_state_" . $session_id . );
+	open( my $fh, ">", "/tmp/cilogon_state_" . $session_id) or error("Cannot open /tmp/cilogon_state_" . $session_id);
         print $fh $state;
         close($fh);
 
@@ -85,7 +85,7 @@ sub is_state_valid {
 	my $state = shift;
 	my $session_id = shift;
 
-	open( my $fh, "<", "/tmp/cilogon_state_" . $session_id) or error("Cannot open /tmp/cilogon_state_" . $session_id . );
+	open( my $fh, "<", "/tmp/cilogon_state_" . $session_id) or error("Cannot open /tmp/cilogon_state_" . $session_id);
 	my $stored_state = <$fh>;
         close($fh);
 

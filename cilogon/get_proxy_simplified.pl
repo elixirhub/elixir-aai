@@ -26,7 +26,7 @@ my $grant_type = "authorization_code";
 my $session_id = $ARGV[0];
 
 # Get the code from the file
-open( my $fh, "<", "/tmp/cilogon_ac_" . $session_id) or error("Cannot open /tmp/cilogon_ac_" . $session_id . );
+open( my $fh, "<", "/tmp/cilogon_ac_" . $session_id) or error("Cannot open /tmp/cilogon_ac_" . $session_id);
 my $code = <$fh>;
 close($fh);
 
