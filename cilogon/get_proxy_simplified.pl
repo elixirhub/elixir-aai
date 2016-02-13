@@ -47,6 +47,10 @@ my $response = decode_json ( $json_response->content );
 
 my $token = $response->{'access_token'};
 
+# Validate ID token
+my $id_token = $response->{'id_token'};
+# TODO: finish this
+
 print "Token stored\n";
 
 # Call the Master Portal to get the proxy

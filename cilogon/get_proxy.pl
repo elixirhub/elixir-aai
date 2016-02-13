@@ -50,6 +50,10 @@ my $response = decode_json ( $json_response->content );
 
 my $token = $response->{'access_token'};
 
+# Validate ID token
+my $id_token = $response->{'id_token'};
+# TODO: finish this
+
 # Store the access token into the DB
 my $sth = $dbh->prepare("UPDATE sessions SET token=? WHERE session_id=?");
 if (!$sth->execute($token, $session_id)) {

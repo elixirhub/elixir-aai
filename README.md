@@ -2,7 +2,7 @@
 ELIXIR AAI services related documents and configuration files
 
 # cilogon
-Sample code for getting the proxy certificate via CILogon (https://wiki.nikhef.nl/grid/CILogon_Pre-Pilot_Work#Public_Demo). 
+Sample code for getting the proxy certificate via CILogon (https://wiki.nikhef.nl/grid/CILogon_Pre-Pilot_Work#Public_Demo). There is also simplified version which doesn't use DB to store the data. Use of simplified version is recommended. 
 
 1. Write an email to aai-contact@elixir-europe.org in order to get client ID
 2. Put client ID into the login.cgi, also modify callback URL which must point to login.cgi on your server.
