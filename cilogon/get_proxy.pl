@@ -5,7 +5,6 @@
 use strict;
 use DBI;
 use LWP;
-use Data::Dumper;
 use JSON::XS;
 
 # Ask for the clientID and client secret at aai-contact@elixir-europe.org
