@@ -55,7 +55,7 @@ if ($q->param('code') && $q->param('state')) {
 	if (!$session_id) {
 		# Generate session id for the user and store it into the HttpOnly cookie
 		my $session_id_generator = new String::Random;
-		$session_id = $session_id_generator->randpattern("sssssssssss");
+		$session_id = $session_id_generator->randpattern("ccCCnnccCCnnccnn");
 	}
 
 	# Client session with token binding, do the hash of the session_id
