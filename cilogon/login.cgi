@@ -3,7 +3,7 @@
 # Sample script which is used to get the code and state which then can be used to obtain proxy certificate from CILogon
 
 use strict;
-use Digest::SHA2;
+use Digest::SHA;
 use String::Random;
 use CGI;
 use DBI;
@@ -63,12 +63,12 @@ if ($q->param('code') && $q->param('state')) {
 	}
 
 	# Client session with token binding, do the hash of the session_id
-	my $sha2obj = new Digest::SHA2;
+	my $sha2obj = new Digest::SHA-256;
 	$sha2obj->add($session_id);
 	my $nonce = $sha2obj->hexdigest();
 
 	# Protection against CSRF
-	my $sha2obj = new Digest::SHA2;
+	my $sha2obj = new Digest::SHA-256;
 	$sha2obj->add($session_id . $client_id);
 	my $state = $sha2obj->hexdigest();
 	my $sth = $dbh->prepare("INSERT INTO sessions (session_id, state) VALUES (?,?)");
