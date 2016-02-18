@@ -11,9 +11,6 @@ my $client_id = "myproxy...";
 my $client_secret = ""; 
 # Put here URL of this script
 my $redirect_url = "https://login.elixir-czech.org/oidc/cb";
-# DB for state and session storage
-# CREATE TABLE sessions ( session_id varchar2, state varchar2, code varchar2, token varchar2);
-my $db_file = "/var/tmp/cilogon.dbfile";
 
 # Do not edit below this line
 # -------------------------------------------------------------------------------

@@ -3,7 +3,7 @@
 # Sample script which is used to get the code and state which then can be used to obtain proxy certificate from CILogon
 
 use strict;
-use Digest::SHA2;
+use Digest::SHA;
 use String::Random;
 use CGI;
 
@@ -11,23 +11,19 @@ use CGI;
 my $client_id = "myproxy...";
 # Put here URL of the callback
 my $redirect_url = "https://";
-# DB for state and session storage
-# CREATE TABLE sessions ( session_id varchar2, state varchar2, code varchar2, token varchar2);
-my $db_file = "/var/tmp/cilogon.dbfile";
 
 # Do not edit below this line
 # -------------------------------------------------------------------------------
 my $q = CGI->new;
 my $session_id_cookie_name = "session_id";
+my $code = $q->param('code');
+my $state = $q->param('state');
 
 # Check if the user is already authorized
-if ($q->param('code') && $q->param('state')) {
+if ($code && $state) {
 	my $session_id = $q->cookie($session_id_cookie_name);
 	# Check if the state is valid
-	if (is_state_valid($q->param("state"), $session_id)) {
-		my $code = $q->param('code');
-		my $state = $q->param('state');
-
+	if (is_state_valid($state, $session_id)) {
 		# Store the access code
 		open( my $fh, ">", "/tmp/cilogon_ac_" . $session_id) or error("Cannot open /tmp/cilogon_ac_" . $session_id);
 		print $fh $code;
@@ -59,12 +55,12 @@ if ($q->param('code') && $q->param('state')) {
 	}
 
 	# Client session with token binding, do the hash of the session_id
-	my $sha2obj = new Digest::SHA2;
+	my $sha2obj = new Digest::SHA-256;
 	$sha2obj->add($session_id);
 	my $nonce = $sha2obj->hexdigest();
 
 	# Protection against CSRF
-	my $sha2obj = new Digest::SHA2;
+	my $sha2obj = new Digest::SHA-256;
 	$sha2obj->add($session_id . $client_id);
 	my $state = $sha2obj->hexdigest();
 	open( my $fh, ">", "/tmp/cilogon_state_" . $session_id) or error("Cannot open /tmp/cilogon_state_" . $session_id);
