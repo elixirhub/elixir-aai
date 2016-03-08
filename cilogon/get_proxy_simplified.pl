@@ -12,7 +12,7 @@ my $client_secret = "";
 # Put here URL of this script
 my $redirect_url = "https://login.elixir-czech.org/oidc/cb";
 
-# Default proxy lifetime (12 hours), maximum is 1M seconds
+# Default proxy lifetime (12 hours), maximum is 604800 seconds (7 days)
 my $proxy_lifetime = "43200";
 
 # Request VOMS attributes for VO, don't forget to configure vomses on MyProxy server, optionally vomses attribute can be defined here.

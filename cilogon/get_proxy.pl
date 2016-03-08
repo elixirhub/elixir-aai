@@ -16,7 +16,7 @@ my $redirect_url = "https://login.elixir-czech.org/oidc/cb";
 # CREATE TABLE sessions ( session_id varchar2, state varchar2, code varchar2, token varchar2);
 my $db_file = "/var/tmp/cilogon.dbfile";
 
-# Default proxy lifetime (12 hours), maximum is 1M seconds
+# Default proxy lifetime (12 hours), maximum is 604800 seconds (7 days)
 my $proxy_lifetime = "43200";
 
 # Request VOMS attributes for VO, don't forget to configure vomses on MyProxy server, optionally vomses attribute can be defined here.
