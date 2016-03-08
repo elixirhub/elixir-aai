@@ -16,6 +16,9 @@ my $redirect_url = "https://login.elixir-czech.org/oidc/cb";
 # CREATE TABLE sessions ( session_id varchar2, state varchar2, code varchar2, token varchar2);
 my $db_file = "/var/tmp/cilogon.dbfile";
 
+# Default proxy lifetime (12 hours), maximum is 1M seconds
+my $proxy_lifetime = "43200";
+
 # Do not edit below this line
 # -------------------------------------------------------------------------------
 my $dbh = DBI->connect("dbi:SQLite:dbname=$db_file","","");
@@ -68,7 +71,8 @@ print "Token stored\n";
 my $response = $ua->post( $cilogon_mp_proxy, {
         'access_token' => $token,
         'client_id' => $client_id,
-        'client_secret' => $client_secret} );
+        'client_secret' => $client_secret,
+	'proxylifetime' => $proxy_lifetime} );
 
 # Store proxy in the tmp file
 open ( my $fh, ">", "/tmp/x509_$session_id") or die "Cannot open file /tmp/x509_$session_id.";

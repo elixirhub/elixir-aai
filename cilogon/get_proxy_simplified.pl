@@ -12,6 +12,9 @@ my $client_secret = "";
 # Put here URL of this script
 my $redirect_url = "https://login.elixir-czech.org/oidc/cb";
 
+# Default proxy lifetime (12 hours), maximum is 1M seconds
+my $proxy_lifetime = "43200";
+
 # Do not edit below this line
 # -------------------------------------------------------------------------------
 
@@ -54,7 +57,8 @@ print "Token stored\n";
 my $response = $ua->post( $cilogon_mp_proxy, {
         'access_token' => $token,
         'client_id' => $client_id,
-        'client_secret' => $client_secret} );
+        'client_secret' => $client_secret,
+	'proxylifetime' => $proxy_lifetime} );
 
 # Store proxy in the tmp file
 open ( my $fh, ">", "/tmp/x509_$session_id") or die "Cannot open file /tmp/x509_$session_id.";
