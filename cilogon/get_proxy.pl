@@ -19,6 +19,10 @@ my $db_file = "/var/tmp/cilogon.dbfile";
 # Default proxy lifetime (12 hours), maximum is 1M seconds
 my $proxy_lifetime = "43200";
 
+# Request VOMS attributes for VO, don't forget to configure vomses on MyProxy server, optionally vomses attribute can be defined here.
+# Also uncomment line 79 
+my $vo_name = "vo.elixir-europe.org";
+
 # Do not edit below this line
 # -------------------------------------------------------------------------------
 my $dbh = DBI->connect("dbi:SQLite:dbname=$db_file","","");
@@ -72,6 +76,7 @@ my $response = $ua->post( $cilogon_mp_proxy, {
         'access_token' => $token,
         'client_id' => $client_id,
         'client_secret' => $client_secret,
+#       'voname' => $vo_name,
 	'proxylifetime' => $proxy_lifetime} );
 
 # Store proxy in the tmp file
