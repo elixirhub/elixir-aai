@@ -3,7 +3,8 @@ Sample code for getting the proxy certificate via CILogon (https://wiki.nikhef.n
 
 Required packages (Debian): libjson-xs-perl, libstring-random-perl, libdigest-sha-perl, libcrypt-ssleay-perl 
 
-1. Write an email to aai-contact@elixir-europe.org in order to get client ID
+1. Register your client at https://elixir-cilogon-mp.grid.cesnet.cz/mp-oa2-server/register
+2. Write an email to aai-contact@elixir-europe.org in order to approve your client
 2. Put client ID into the login.cgi, also modify callback URL which must point to login.cgi on your server.
 3. From your web application you can redirect user to login.cgi (you can pass your session ID to the login.cgi via GET parameter session_id).
 4. Login.cgi will let user authenticate and after the successful authentication it stores the code into the DB (code can be retreived from the DB using session id).
