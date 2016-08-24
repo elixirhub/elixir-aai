@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:mdattr="urn:oasis:names:tc:SAML:metadata:attribute" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mdui="urn:oasis:names:tc:SAML:metadata:ui" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" entityID="https://login.elixir-czech.org/proxy/">
   <md:Extensions>
+    <eduidmd:RepublishRequest xmlns:eduidmd="http://eduid.cz/schema/metadata/1.0">
+            <eduidmd:RepublishTarget>http://edugain.org/</eduidmd:RepublishTarget>
+    </eduidmd:RepublishRequest>
     <mdattr:EntityAttributes xmlns:mdattr="urn:oasis:names:tc:SAML:metadata:attribute">
       <saml:Attribute xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" Name="http://macedir.org/entity-category" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
         <saml:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">http://www.geant.net/uri/dataprotection-code-of-conduct/v1</saml:AttributeValue>
@@ -12,8 +15,12 @@
     <md:Extensions>
       <mdui:UIInfo xmlns:mdui="urn:oasis:names:tc:SAML:metadata:ui">
         <mdui:DisplayName xml:lang="en">ELIXIR research infrastructure AAI</mdui:DisplayName>
+	<mdui:DisplayName xml:lang="cs">ELIXIR research infrastructure AAI</mdui:DisplayName>
         <mdui:Description xml:lang="en">This service is the common gateway to the services ELIXIR research infrastructure provides for biological data.</mdui:Description>
+	<mdui:Description xml:lang="cs">This service is the common gateway to the services ELIXIR
+research infrastructure provides for biological data.</mdui:Description>
         <mdui:InformationURL xml:lang="en">http://www.elixir-europe.org/services/compute/aai</mdui:InformationURL>
+	<mdui:InformationURL xml:lang="cs">http://login.elixir-czech.org/</mdui:InformationURL>
         <mdui:PrivacyStatementURL xml:lang="en">http://www.elixir-europe.org/services/compute/aai</mdui:PrivacyStatementURL>
         <mdui:Keywords xml:lang="en">ELIXIR proxy biology life sciences</mdui:Keywords>
         <mdui:Logo width="96" height="96">https://login.elixir-czech.org/media/elixir-ds.jpg</mdui:Logo>
