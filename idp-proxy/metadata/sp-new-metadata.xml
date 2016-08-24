@@ -19,9 +19,9 @@
         <mdui:Description xml:lang="en">This service is the common gateway to the services ELIXIR research infrastructure provides for biological data.</mdui:Description>
 	<mdui:Description xml:lang="cs">This service is the common gateway to the services ELIXIR
 research infrastructure provides for biological data.</mdui:Description>
-        <mdui:InformationURL xml:lang="en">http://www.elixir-europe.org/services/compute/aai</mdui:InformationURL>
-	<mdui:InformationURL xml:lang="cs">http://login.elixir-czech.org/</mdui:InformationURL>
-        <mdui:PrivacyStatementURL xml:lang="en">http://www.elixir-europe.org/services/compute/aai</mdui:PrivacyStatementURL>
+        <mdui:InformationURL xml:lang="en">http://www.elixir-europe.org/services/compute/aai/</mdui:InformationURL>
+	<mdui:InformationURL xml:lang="cs">http://www.elixir-europe.org/services/compute/aai/</mdui:InformationURL>
+        <mdui:PrivacyStatementURL xml:lang="en">http://www.elixir-europe.org/services/compute/aai/</mdui:PrivacyStatementURL>
         <mdui:Keywords xml:lang="en">ELIXIR proxy biology life sciences</mdui:Keywords>
         <mdui:Logo width="96" height="96">https://login.elixir-czech.org/media/elixir-ds.jpg</mdui:Logo>
       </mdui:UIInfo>
@@ -67,8 +67,11 @@ research infrastructure provides for biological data.</mdui:Description>
   </md:SPSSODescriptor>
   <md:Organization>
     <md:OrganizationName xml:lang="en">ELIXIR CZ</md:OrganizationName>
+    <md:OrganizationName xml:lang="cs">ELIXIR CZ</md:OrganizationName>
     <md:OrganizationDisplayName xml:lang="en">ELIXIR CZ</md:OrganizationDisplayName>
+    <md:OrganizationDisplayName xml:lang="cs">ELIXIR CZ</md:OrganizationDisplayName>
     <md:OrganizationURL xml:lang="en">http://www.elixir-czech.cz</md:OrganizationURL>
+    <md:OrganizationURL xml:lang="cs">http://www.elixir-czech.cz</md:OrganizationURL>
   </md:Organization>
   <md:ContactPerson contactType="support">
     <md:GivenName>ELIXIR</md:GivenName>
