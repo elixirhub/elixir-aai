@@ -20,7 +20,7 @@
 	<mdui:Description xml:lang="cs">Tato služba je přístupovým bodem ke službám výzkumné infrastruktury ELIXIR</mdui:Description>
         <mdui:InformationURL xml:lang="en">http://www.elixir-europe.org/services/compute/aai/</mdui:InformationURL>
 	<mdui:InformationURL xml:lang="cs">http://www.elixir-europe.org/services/compute/aai/</mdui:InformationURL>
-        <mdui:PrivacyStatementURL xml:lang="en">http://www.elixir-europe.org/services/compute/aai/</mdui:PrivacyStatementURL>
+        <mdui:PrivacyStatementURL xml:lang="en">https://drive.google.com/file/d/0B_vjNrTfEoKrZHVGdC0ySWY4WFE/view</mdui:PrivacyStatementURL>
         <mdui:Keywords xml:lang="en">ELIXIR proxy biology life sciences</mdui:Keywords>
         <mdui:Logo width="96" height="96">https://login.elixir-czech.org/media/elixir-ds.jpg</mdui:Logo>
       </mdui:UIInfo>
