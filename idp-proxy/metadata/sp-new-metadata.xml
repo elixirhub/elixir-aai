@@ -17,7 +17,7 @@
         <mdui:DisplayName xml:lang="en">ELIXIR research infrastructure AAI</mdui:DisplayName>
 	<mdui:DisplayName xml:lang="cs">Výzkumná infrastruktura ELIXIR - AAI</mdui:DisplayName>
         <mdui:Description xml:lang="en">This service is the common gateway to the services ELIXIR research infrastructure provides for biological data.</mdui:Description>
-	<mdui:Description xml:lang="cs">Tato služby je přístupovým bodem ke službám výzkumné infrastruktury ELIXIR</mdui:Description>
+	<mdui:Description xml:lang="cs">Tato služba je přístupovým bodem ke službám výzkumné infrastruktury ELIXIR</mdui:Description>
         <mdui:InformationURL xml:lang="en">http://www.elixir-europe.org/services/compute/aai/</mdui:InformationURL>
 	<mdui:InformationURL xml:lang="cs">http://www.elixir-europe.org/services/compute/aai/</mdui:InformationURL>
         <mdui:PrivacyStatementURL xml:lang="en">http://www.elixir-europe.org/services/compute/aai/</mdui:PrivacyStatementURL>
