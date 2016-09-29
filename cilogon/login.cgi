@@ -14,6 +14,10 @@ my $redirect_url = "https://";
 
 # Do not edit below this line
 # -------------------------------------------------------------------------------
+my $cilogon_mp = "https://elixir-cilogon-mp.grid.cesnet.cz/mp-oa2-server/authorize";
+my $scope="openid edu.uiuc.ncsa.myproxy.getcert";
+my $idp_entity_id="https://login.elixir-czech.org/idp/";
+
 my $q = CGI->new;
 my $session_id_cookie_name = "session_id";
 my $code = $q->param('code');
@@ -43,9 +47,7 @@ if ($code && $state) {
 } else {
 	# User is not autheticated, so get the code and state
 	# Constants
-	my $cilogon_mp="https://elixir-cilogon-mp.grid.cesnet.cz/mp-oa2-server/authorize";
 	my $response_type="code";
-	my $scope="openid edu.uiuc.ncsa.myproxy.getcert";
 
 	my $session_id = $q->param('session_id');
 	if (!$session_id) {
@@ -68,7 +70,7 @@ if ($code && $state) {
         close($fh);
 
 	# Instruct user's browser to do the redirection to the CILogon Master Portal
-	my $URL = "$cilogon_mp?response_type=$response_type&client_id=$client_id&redirect_uri=$redirect_url&scope=$scope&nonce=$nonce&state=$state";
+	my $URL = "$cilogon_mp?response_type=$response_type&client_id=$client_id&redirect_uri=$redirect_url&scope=$scope&nonce=$nonce&state=$state&idphint=$idp_entity_id";
 
 	# Set the cookie which will hold the nonce and application session id
 	my $cookie_session = $q->cookie(-name => "$session_id_cookie_name", -value => "$session_id", -httponly => 1, -secure => 1);
