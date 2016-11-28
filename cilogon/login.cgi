@@ -6,37 +6,33 @@ use strict;
 use Digest::SHA;
 use String::Random;
 use CGI;
-use DBI;
 
 # Ask for the clientID at aai-contact@elixir-europe.org
 my $client_id = "myproxy...";
 # Put here URL of the callback
 my $redirect_url = "https://";
-# DB for state and session storage
-# CREATE TABLE sessions ( session_id varchar2, state varchar2, code varchar2, token varchar2);
-my $db_file = "/var/tmp/cilogon.dbfile";
 
 # Do not edit below this line
 # -------------------------------------------------------------------------------
+my $cilogon_mp = "https://elixir-cilogon-mp.grid.cesnet.cz/mp-oa2-server/authorize";
+my $scope="openid edu.uiuc.ncsa.myproxy.getcert";
+my $idp_entity_id="https://login.elixir-czech.org/idp/";
+
 my $q = CGI->new;
 my $session_id_cookie_name = "session_id";
-my $dbh = DBI->connect("dbi:SQLite:dbname=$db_file","","");
+my $code = $q->param('code');
+my $state = $q->param('state');
 
 # Check if the user is already authorized
-if ($q->param('code') && $q->param('state')) {
+if ($code && $state) {
 	my $session_id = $q->cookie($session_id_cookie_name);
 	# Check if the state is valid
-	if (is_state_valid($q->param("state"), $session_id)) {
-		my $code = $q->param('code');
-		my $state = $q->param('state');
-
+	if (is_state_valid($state, $session_id)) {
 		# Store the access code
-		my $sth = $dbh->prepare("UPDATE sessions SET code=? WHERE state=? and session_id=?");
-        	if (!$sth->execute($code, $session_id, $state)) {
-                	error($sth->errstr);
-                	exit;
-        	}
-        	$sth->finish;
+		open( my $fh, ">", "/tmp/cilogon_ac_" . $session_id) or error("Cannot open /tmp/cilogon_ac_" . $session_id);
+		print $fh $code;
+		close($fh);
+
 		print $q->header('text/html');
 		print $q->h1("Code stored for session ID: $session_id");
 		exit;
@@ -51,9 +47,7 @@ if ($q->param('code') && $q->param('state')) {
 } else {
 	# User is not autheticated, so get the code and state
 	# Constants
-	my $cilogon_mp="https://elixir-cilogon-mp.grid.cesnet.cz/mp-oa2-server/authorize";
 	my $response_type="code";
-	my $scope="openid edu.uiuc.ncsa.myproxy.getcert";
 
 	my $session_id = $q->param('session_id');
 	if (!$session_id) {
@@ -71,15 +65,12 @@ if ($q->param('code') && $q->param('state')) {
 	my $sha2obj = new Digest::SHA-256;
 	$sha2obj->add($session_id . $client_id);
 	my $state = $sha2obj->hexdigest();
-	my $sth = $dbh->prepare("INSERT INTO sessions (session_id, state) VALUES (?,?)");
-	if (!$sth->execute($session_id, $state)) {
-		error($sth->errstr);
-		exit;
-	}
-	$sth->finish;
+	open( my $fh, ">", "/tmp/cilogon_state_" . $session_id) or error("Cannot open /tmp/cilogon_state_" . $session_id);
+        print $fh $state;
+        close($fh);
 
 	# Instruct user's browser to do the redirection to the CILogon Master Portal
-	my $URL = "$cilogon_mp?response_type=$response_type&client_id=$client_id&redirect_uri=$redirect_url&scope=$scope&nonce=$nonce&state=$state";
+	my $URL = "$cilogon_mp?response_type=$response_type&client_id=$client_id&redirect_uri=$redirect_url&scope=$scope&nonce=$nonce&state=$state&idphint=$idp_entity_id";
 
 	# Set the cookie which will hold the nonce and application session id
 	my $cookie_session = $q->cookie(-name => "$session_id_cookie_name", -value => "$session_id", -httponly => 1, -secure => 1);
@@ -91,17 +82,18 @@ if ($q->param('code') && $q->param('state')) {
 sub is_state_valid {
 	my $state = shift;
 	my $session_id = shift;
-	my $sth = $dbh->prepare("SELECT 1 FROM sessions WHERE state=? and session_id=?");
-	if (!$sth->execute($state, $session_id)) {
-		error($sth->errstr);
-                exit;
+
+	open( my $fh, "<", "/tmp/cilogon_state_" . $session_id) or error("Cannot open /tmp/cilogon_state_" . $session_id);
+	my $stored_state = <$fh>;
+        close($fh);
+
+	# Delete the file with state it won't be needed anymore.
+	unlink("/tmp/cilogon_state_" . $session_id);
+
+	if ($stored_state == $state) {
+		return 1;	
 	}
-	my $ret = 0;
-	if ($sth->fetch()) {
-		$ret = 1;
-	};
-	$sth->finish;
-	return $ret;
+	return 0;
 }
 
 # Just print an error
